@@ -3,9 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { Search, User, Bell } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const Header = () => {
   const navigate = useNavigate();
+  
+  // Mock notification count - in a real app, this would come from a state or API
+  const notificationCount = 2;
 
   return (
     <header className="sticky top-0 z-30 w-full border-b bg-white shadow-sm">
@@ -37,9 +41,17 @@ const Header = () => {
           <Button 
             variant="ghost" 
             size="icon"
+            className="relative"
             onClick={() => navigate("/notifications")}
           >
             <Bell className="h-5 w-5" />
+            {notificationCount > 0 && (
+              <Badge 
+                className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-red-500 text-white text-xs"
+              >
+                {notificationCount}
+              </Badge>
+            )}
           </Button>
           
           <Button 
