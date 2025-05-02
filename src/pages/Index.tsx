@@ -3,7 +3,8 @@ import MainLayout from "@/components/layout/MainLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
-import { Search } from "lucide-react";
+import { Search, Upload } from "lucide-react";
+import DocumentUploader from "@/components/upload/DocumentUploader";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const Index = () => {
         <div 
           className="absolute inset-0 bg-gradient-to-r from-legal-primary via-legal-secondary to-legal-primary opacity-90"
         ></div>
-        <div className="relative container mx-auto px-4 py-24 text-center">
+        <div className="relative container mx-auto px-4 py-20 md:py-24 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Intelligent Case Search and Recommendation
           </h1>
@@ -29,7 +30,7 @@ const Index = () => {
           
           <div className="max-w-xl mx-auto relative mb-8">
             <Input 
-              className="pl-4 pr-10 py-6 text-lg bg-white/95 placeholder-gray-500"
+              className="pl-4 pr-10 py-6 text-lg bg-white/95 placeholder-gray-500 shadow-lg"
               placeholder="Describe your legal question or case facts..."
               onClick={handleSearchClick}
             />
@@ -43,7 +44,7 @@ const Index = () => {
           
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Button 
-              className="bg-white text-legal-primary hover:bg-white/90"
+              className="bg-white text-legal-primary hover:bg-white/90 shadow-md"
               size="lg"
               onClick={() => navigate("/search")}
             >
@@ -53,7 +54,7 @@ const Index = () => {
               variant="outline" 
               className="border-white text-white hover:bg-white/10"
               size="lg"
-              onClick={() => navigate("/upload")}
+              onClick={() => document.getElementById('upload-section')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Upload Document
             </Button>
@@ -67,7 +68,7 @@ const Index = () => {
           <h2 className="text-3xl font-bold text-center mb-12 text-legal-primary">How It Works</h2>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-sm">
+            <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow transition-all duration-300">
               <div className="h-12 w-12 rounded-full bg-legal-accent/20 flex items-center justify-center mb-4">
                 <span className="text-2xl font-bold text-legal-accent">1</span>
               </div>
@@ -77,7 +78,7 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow-sm">
+            <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow transition-all duration-300">
               <div className="h-12 w-12 rounded-full bg-legal-accent/20 flex items-center justify-center mb-4">
                 <span className="text-2xl font-bold text-legal-accent">2</span>
               </div>
@@ -87,7 +88,7 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow-sm">
+            <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow transition-all duration-300">
               <div className="h-12 w-12 rounded-full bg-legal-accent/20 flex items-center justify-center mb-4">
                 <span className="text-2xl font-bold text-legal-accent">3</span>
               </div>
@@ -100,8 +101,27 @@ const Index = () => {
         </div>
       </section>
       
+      {/* Upload Document Section - New Highlighted Section */}
+      <section id="upload-section" className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-6 text-legal-primary">Upload Your Document</h2>
+            <p className="text-center text-gray-600 mb-8 max-w-3xl mx-auto">
+              Upload your legal document to get instant analysis and relevant case recommendations
+            </p>
+            
+            <DocumentUploader 
+              onDocumentProcessed={(text) => {
+                console.log("Document processed:", text);
+                navigate("/search");
+              }} 
+            />
+          </div>
+        </div>
+      </section>
+      
       {/* Benefits Section */}
-      <section className="py-16">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <h2 className="text-3xl font-bold mb-4 text-legal-primary">Transforming Legal Research in India</h2>
@@ -110,8 +130,8 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="flex items-start">
+          <div className="grid md:grid-cols-2 gap-x-8 gap-y-6">
+            <div className="flex items-start bg-white p-4 rounded-lg shadow-sm hover:shadow transition-all duration-300">
               <div className="h-10 w-10 rounded-full bg-legal-primary flex items-center justify-center flex-shrink-0 mt-1">
                 <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -125,7 +145,7 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="flex items-start">
+            <div className="flex items-start bg-white p-4 rounded-lg shadow-sm hover:shadow transition-all duration-300">
               <div className="h-10 w-10 rounded-full bg-legal-primary flex items-center justify-center flex-shrink-0 mt-1">
                 <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
@@ -139,7 +159,7 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="flex items-start">
+            <div className="flex items-start bg-white p-4 rounded-lg shadow-sm hover:shadow transition-all duration-300">
               <div className="h-10 w-10 rounded-full bg-legal-primary flex items-center justify-center flex-shrink-0 mt-1">
                 <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -153,7 +173,7 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="flex items-start">
+            <div className="flex items-start bg-white p-4 rounded-lg shadow-sm hover:shadow transition-all duration-300">
               <div className="h-10 w-10 rounded-full bg-legal-primary flex items-center justify-center flex-shrink-0 mt-1">
                 <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -170,7 +190,7 @@ const Index = () => {
           
           <div className="text-center mt-12">
             <Button 
-              className="bg-legal-primary hover:bg-legal-secondary"
+              className="bg-legal-primary hover:bg-legal-secondary shadow-md"
               size="lg"
               onClick={() => navigate("/search")}
             >
@@ -205,13 +225,23 @@ const Index = () => {
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Join thousands of legal professionals across India who are using our platform to find better precedents faster.
           </p>
-          <Button 
-            className="bg-legal-primary hover:bg-legal-secondary"
-            size="lg"
-            onClick={() => navigate("/search")}
-          >
-            Start Your Search Now
-          </Button>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Button 
+              className="bg-legal-primary hover:bg-legal-secondary shadow-md"
+              size="lg"
+              onClick={() => navigate("/search")}
+            >
+              Start Your Search Now
+            </Button>
+            <Button 
+              variant="outline" 
+              className="border-legal-primary text-legal-primary hover:bg-legal-primary/5"
+              size="lg"
+              onClick={() => document.getElementById('upload-section')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Upload Document
+            </Button>
+          </div>
         </div>
       </section>
     </MainLayout>

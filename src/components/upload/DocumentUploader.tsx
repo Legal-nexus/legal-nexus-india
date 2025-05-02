@@ -105,19 +105,22 @@ const DocumentUploader = ({ onDocumentProcessed }: DocumentUploaderProps) => {
   };
 
   return (
-    <Card className="border border-dashed">
+    <Card className="border border-dashed shadow-md hover:border-legal-primary transition-colors">
       <CardContent className="p-6">
         {!file ? (
           <div 
-            className="flex flex-col items-center justify-center py-8 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors"
+            className="flex flex-col items-center justify-center py-10 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors"
             onClick={() => document.getElementById('file-upload')?.click()}
           >
-            <Upload className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-medium mb-1">Upload Document</h3>
-            <p className="text-sm text-muted-foreground text-center max-w-xs">
-              Upload a case document in PDF or text format to analyze and find similar cases
+            <Upload className="h-16 w-16 text-legal-primary mb-4" />
+            <h3 className="text-xl font-medium mb-2 text-legal-primary">Upload Legal Document</h3>
+            <p className="text-sm text-gray-600 text-center max-w-xs mb-4">
+              Upload a case document in PDF or text format to analyze and find similar precedents
             </p>
-            <Button variant="outline" className="mt-4">
+            <Button 
+              variant="outline" 
+              className="mt-2 border-legal-primary text-legal-primary hover:bg-legal-primary/5"
+            >
               Select File
             </Button>
             <input 
@@ -132,17 +135,17 @@ const DocumentUploader = ({ onDocumentProcessed }: DocumentUploaderProps) => {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <File className="h-8 w-8 text-blue-600" />
+                <File className="h-10 w-10 text-legal-primary" />
                 <div>
-                  <p className="font-medium">{file.name}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {(file.size / 1024).toFixed(1)} KB • {file.type}
+                  <p className="font-medium text-legal-primary">{file.name}</p>
+                  <p className="text-xs text-gray-600">
+                    {(file.size / 1024 / 1024).toFixed(2)} MB • {file.type}
                   </p>
                 </div>
               </div>
               {!uploading && (
                 <Button variant="ghost" size="icon" onClick={clearFile}>
-                  <X className="h-4 w-4" />
+                  <X className="h-5 w-5" />
                 </Button>
               )}
             </div>
@@ -157,11 +160,14 @@ const DocumentUploader = ({ onDocumentProcessed }: DocumentUploaderProps) => {
               </div>
             ) : progress === 100 ? (
               <div className="flex items-center space-x-2 text-sm text-green-600">
-                <Check className="h-4 w-4" />
+                <Check className="h-5 w-5" />
                 <span>Document processed successfully</span>
               </div>
             ) : (
-              <Button onClick={handleUpload} className="w-full">
+              <Button 
+                onClick={handleUpload} 
+                className="w-full bg-legal-primary hover:bg-legal-secondary"
+              >
                 Process Document
               </Button>
             )}

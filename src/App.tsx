@@ -25,6 +25,7 @@ const App = () => (
           <Route path="/case/:id" element={<CasePage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/upload" element={<Index />} /> {/* Redirect /upload to home with section scroll */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
