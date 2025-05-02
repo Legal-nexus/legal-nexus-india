@@ -1,4 +1,3 @@
-
 import MainLayout from "@/components/layout/MainLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -51,8 +50,7 @@ const Index = () => {
               Advanced Search
             </Button>
             <Button 
-              variant="outline" 
-              className="border-white text-white hover:bg-white/10"
+              className="bg-legal-accent text-white hover:bg-legal-accent/90 shadow-md"
               size="lg"
               onClick={() => document.getElementById('upload-section')?.scrollIntoView({ behavior: 'smooth' })}
             >

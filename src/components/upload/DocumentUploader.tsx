@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Upload, File, X, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -112,14 +111,14 @@ const DocumentUploader = ({ onDocumentProcessed }: DocumentUploaderProps) => {
             className="flex flex-col items-center justify-center py-10 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors"
             onClick={() => document.getElementById('file-upload')?.click()}
           >
-            <Upload className="h-16 w-16 text-legal-primary mb-4" />
-            <h3 className="text-xl font-medium mb-2 text-legal-primary">Upload Legal Document</h3>
+            <Upload className="h-16 w-16 text-legal-accent mb-4" />
+            <h3 className="text-xl font-bold mb-2 text-legal-accent">Upload Legal Document</h3>
             <p className="text-sm text-gray-600 text-center max-w-xs mb-4">
               Upload a case document in PDF or text format to analyze and find similar precedents
             </p>
             <Button 
-              variant="outline" 
-              className="mt-2 border-legal-primary text-legal-primary hover:bg-legal-primary/5"
+              variant="default"
+              className="mt-2 bg-legal-primary text-white hover:bg-legal-secondary font-semibold text-base"
             >
               Select File
             </Button>
