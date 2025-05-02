@@ -119,6 +119,6 @@
 }
 
 /* Smooth transitions for interactions */
-.transition-all {
-  @apply transition-all duration-200 ease-in-out;
+.smooth-transition {
+  transition: all 200ms ease-in-out;
 }
