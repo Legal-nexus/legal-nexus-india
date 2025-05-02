@@ -1,23 +1,29 @@
 
 import { useEffect, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { LegalCase } from "@/lib/mockData";
 import * as d3 from "d3";
+import { LegalCase } from "@/lib/mockData";
 
 interface KnowledgeGraphProps {
   caseData: LegalCase;
 }
 
-interface Node {
+// Define interfaces with proper d3 simulation compatibility
+interface Node extends d3.SimulationNodeDatum {
   id: string;
   label: string;
   group: string;
   radius?: number;
+  // These properties are added by d3 during simulation
+  x?: number;
+  y?: number;
+  fx?: number | null;
+  fy?: number | null;
 }
 
-interface Link {
-  source: string;
-  target: string;
+interface Link extends d3.SimulationLinkDatum<Node> {
+  source: string | Node;
+  target: string | Node;
   type: string;
 }
 
@@ -80,11 +86,12 @@ const KnowledgeGraph = ({ caseData }: KnowledgeGraphProps) => {
       .range(["#1e3a8a", "#047857", "#7e22ce", "#b7953f", "#be123c"]);
     
     // Create force simulation
-    const simulation = d3.forceSimulation<Node>(nodes)
+    const simulation = d3.forceSimulation<Node>()
+      .nodes(nodes)
       .force("link", d3.forceLink<Node, Link>(links).id(d => d.id).distance(100))
-      .force("charge", d3.forceManyBody().strength(-300))
-      .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collide", d3.forceCollide().radius(d => (d.radius || 10) + 5));
+      .force("charge", d3.forceManyBody<Node>().strength(-300))
+      .force("center", d3.forceCenter<Node>(width / 2, height / 2))
+      .force("collide", d3.forceCollide<Node>().radius(d => (d.radius || 10) + 5));
     
     // Add links
     const link = svg.append("g")
@@ -174,12 +181,12 @@ const KnowledgeGraph = ({ caseData }: KnowledgeGraphProps) => {
     // Update positions on simulation tick
     simulation.on("tick", () => {
       link
-        .attr("x1", d => (d.source as unknown as Node).x || 0)
-        .attr("y1", d => (d.source as unknown as Node).y || 0)
-        .attr("x2", d => (d.target as unknown as Node).x || 0)
-        .attr("y2", d => (d.target as unknown as Node).y || 0);
+        .attr("x1", d => (d.source as Node).x || 0)
+        .attr("y1", d => (d.source as Node).y || 0)
+        .attr("x2", d => (d.target as Node).x || 0)
+        .attr("y2", d => (d.target as Node).y || 0);
       
-      node.attr("transform", d => `translate(${d.x}, ${d.y})`);
+      node.attr("transform", d => `translate(${d.x || 0}, ${d.y || 0})`);
     });
     
     // Drag functions
