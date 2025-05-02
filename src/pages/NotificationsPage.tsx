@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -75,11 +74,11 @@ const NotificationsPage = () => {
   return (
     <MainLayout>
       <div className="container max-w-4xl py-8">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold">Notifications</h1>
+            <h1 className="text-xl sm:text-2xl font-bold">Notifications</h1>
             {unreadCount > 0 && (
-              <Badge className="bg-primary">{unreadCount} new</Badge>
+              <Badge className="bg-primary px-2 py-0.5 text-xs whitespace-nowrap">{unreadCount} new</Badge>
             )}
           </div>
           <Button 
@@ -87,6 +86,7 @@ const NotificationsPage = () => {
             size="sm" 
             onClick={markAllAsRead}
             disabled={unreadCount === 0}
+            className="text-xs sm:text-sm px-2 sm:px-4"
           >
             Mark all as read
           </Button>
@@ -103,30 +103,32 @@ const NotificationsPage = () => {
           <div className="space-y-4">
             {notifications.map((notification) => (
               <Card key={notification.id} className={notification.read ? "bg-white" : "bg-blue-50 border-blue-200"}>
-                <CardHeader className="pb-2">
+                <CardHeader className="p-3 sm:p-6 sm:pb-2">
                   <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="text-lg flex items-center gap-2">
-                        {notification.title}
-                        <Badge className={getBadgeColor(notification.type)}>
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <CardTitle className="text-base sm:text-lg">
+                          {notification.title}
+                        </CardTitle>
+                        <Badge className={`${getBadgeColor(notification.type)} text-xs`}>
                           {notification.type}
                         </Badge>
-                      </CardTitle>
-                      <CardDescription>{notification.date}</CardDescription>
+                      </div>
+                      <CardDescription className="text-xs sm:text-sm">{notification.date}</CardDescription>
                     </div>
                     {!notification.read && (
                       <Button 
                         variant="ghost" 
                         size="icon" 
                         onClick={() => markAsRead(notification.id)}
-                        className="h-8 w-8"
+                        className="h-7 w-7 sm:h-8 sm:w-8 ml-2 flex-shrink-0"
                       >
                         <Check className="h-4 w-4" />
                       </Button>
                     )}
                   </div>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="p-3 sm:p-6 pt-0 sm:pt-0 text-sm sm:text-base">
                   <p>{notification.message}</p>
                 </CardContent>
               </Card>

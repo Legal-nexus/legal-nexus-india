@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
@@ -47,7 +46,7 @@ const Header = () => {
             <Bell className="h-5 w-5" />
             {notificationCount > 0 && (
               <Badge 
-                className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-red-500 text-white text-xs"
+                className="absolute -top-2 -right-2 min-w-5 h-5 flex items-center justify-center p-0.5 bg-red-500 text-white text-xs"
               >
                 {notificationCount}
               </Badge>

@@ -105,15 +105,15 @@ const DocumentUploader = ({ onDocumentProcessed }: DocumentUploaderProps) => {
 
   return (
     <Card className="border border-dashed shadow-md hover:border-legal-primary transition-colors">
-      <CardContent className="p-6">
+      <CardContent className="p-4 md:p-6">
         {!file ? (
           <div 
-            className="flex flex-col items-center justify-center py-10 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors"
+            className="flex flex-col items-center justify-center py-6 md:py-10 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors"
             onClick={() => document.getElementById('file-upload')?.click()}
           >
-            <Upload className="h-16 w-16 text-legal-accent mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-legal-accent">Upload Legal Document</h3>
-            <p className="text-sm text-gray-600 text-center max-w-xs mb-4">
+            <Upload className="h-12 w-12 md:h-16 md:w-16 text-legal-accent mb-3 md:mb-4" />
+            <h3 className="text-lg md:text-xl font-bold mb-2 text-legal-accent">Upload Legal Document</h3>
+            <p className="text-sm text-gray-600 text-center max-w-xs mb-3 md:mb-4">
               Upload a case document in PDF or text format to analyze and find similar precedents
             </p>
             <Button 
