@@ -10,9 +10,11 @@ const Footer = () => {
         {/* Logo and company information */}
         <div className="flex flex-col items-center mb-8 md:mb-12 text-center">
           <div className="flex items-center justify-center mb-4">
-            <div className="flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-white text-legal-primary mr-3">
-              <span className="font-bold text-lg md:text-2xl">LN</span>
-            </div>
+            <img 
+              src="/assets/images/logo.png" 
+              alt="Legal Nexus India Logo" 
+              className="w-12 h-12 md:w-16 md:h-16 mr-3 object-contain bg-white p-1 rounded-full"
+            />
             <h2 className="text-2xl md:text-4xl font-bold">
               Legal Nexus <span className="text-legal-accent">India</span>
             </h2>

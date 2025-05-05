@@ -33,7 +33,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen bg-white overflow-hidden">
       <Header />
-      <main className={`flex-1 animate-fadeIn pt-16 ${shouldShowFooter ? 'min-h-[calc(100vh-64px-350px)]' : 'min-h-[calc(100vh-64px)]'}`}>
+      <main className={`flex-1 animate-fadeIn pt-16 md:pt-20 lg:pt-24 ${shouldShowFooter ? 'min-h-[calc(100vh-64px-350px)] md:min-h-[calc(100vh-80px-350px)] lg:min-h-[calc(100vh-96px-350px)]' : 'min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)] lg:min-h-[calc(100vh-96px)]'}`}>
         {children}
       </main>
       {shouldShowFooter && <Footer />}

@@ -2,15 +2,35 @@ import MainLayout from "@/components/layout/MainLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
-import { Search, Upload } from "lucide-react";
+import { Search, Upload, Scale, Sparkles } from "lucide-react";
 import DocumentUploader from "@/components/upload/DocumentUploader";
+import { useState, useRef, useEffect } from "react";
 
 const Index = () => {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const handleSearchClick = () => {
-    navigate("/search");
+  const handleSearchSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    } else {
+      navigate("/search");
+    }
   };
+
+  // Focus the search input when component mounts for better UX
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (searchInputRef.current) {
+        searchInputRef.current.focus();
+      }
+    }, 1000);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <MainLayout>
@@ -19,43 +39,70 @@ const Index = () => {
         <div 
           className="absolute inset-0 bg-gradient-to-r from-legal-primary via-legal-secondary to-legal-primary opacity-90"
         ></div>
-        <div className="relative container mx-auto px-4 py-12 md:py-24 text-center">
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 md:mb-6">
-            Intelligent Case Search and Recommendation
+        <div className="relative container mx-auto px-4 py-16 md:py-28 text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 md:mb-10 leading-tight tracking-tight max-w-5xl mx-auto">
+            Intelligent Case Search <span className="hidden xs:inline">&</span><br className="xs:hidden" /> Recommendation
           </h1>
-          <p className="text-lg md:text-xl text-white/90 mb-6 md:mb-8 max-w-3xl mx-auto">
-            Find relevant Indian legal precedents through AI-powered search that understands legal principles, not just keywords.
-          </p>
           
-          <div className="max-w-xl mx-auto relative mb-6 md:mb-8">
-            <Input 
-              className="pl-3 md:pl-4 pr-12 py-4 md:py-6 text-base md:text-lg bg-white/95 placeholder-gray-500 shadow-lg"
-              placeholder="Describe your legal question or case facts..."
-              onClick={handleSearchClick}
-            />
-            <Button 
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 h-8 w-8 md:h-10 md:w-10 p-0 bg-legal-accent hover:bg-legal-accent/90"
-              onClick={handleSearchClick}
-            >
-              <Search className="h-4 md:h-5 w-4 md:w-5" />
-            </Button>
+          <div className="max-w-4xl lg:max-w-5xl mx-auto space-y-6 md:space-y-8 mb-10 md:mb-12">
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/95 mx-auto leading-relaxed px-2 sm:px-4 lg:px-8">
+              Find relevant Indian legal precedents through our AI-powered search platform that understands the underlying legal principles, doctrine interpretations, and factual contexts — not just matching keywords.
+            </p>
+            
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mx-auto px-2 sm:px-4 lg:px-6">
+              Access 70+ years of Supreme Court and High Court judgments, with intelligent connections between statutes, case law, and legal concepts.
+            </p>
           </div>
           
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <div className="max-w-xl md:max-w-2xl mx-auto relative mb-10 md:mb-12 px-3 sm:px-0">
+            <form onSubmit={handleSearchSubmit} className="relative">
+              <div className={`relative ${isFocused ? 'after:opacity-100' : 'after:opacity-0'} after:absolute after:inset-0 after:-z-10 after:rounded-lg after:blur-md after:bg-amber-300/60 after:transition-all after:duration-500`}>
+                <Input 
+                  ref={searchInputRef}
+                  className={`pl-5 pr-14 py-6 sm:py-7 md:py-8 text-base sm:text-lg md:text-xl bg-white/95 placeholder-gray-500 shadow-lg rounded-lg border-0 transition-all duration-300
+                  focus:outline-none focus:ring-2 focus:ring-amber-400/80 focus:border-amber-400
+                  focus-visible:ring-2 focus-visible:ring-amber-400/80 focus-visible:border-amber-400
+                  hover:shadow-xl focus:shadow-amber-300/30 focus:shadow-xl focus:scale-[1.01]
+                  ${isFocused ? 'ring-2 ring-amber-400/80 shadow-amber-300/30 shadow-xl scale-[1.01]' : ''}`}
+                  placeholder="Describe your legal question or case facts..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
+                />
+              </div>
+              <Button 
+                type="submit"
+                className={`absolute right-5 sm:right-3 top-1/2 -translate-y-1/2 h-11 w-11 sm:h-12 sm:w-12 md:h-14 md:w-14 p-0 rounded-full shadow-md transform hover:scale-105 transition-all duration-300
+                ${isFocused ? 'bg-amber-400 hover:bg-amber-500' : 'bg-legal-accent hover:bg-legal-accent/90'}`}
+              >
+                <Search className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 text-white" />
+              </Button>
+            </form>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-5 sm:gap-6 md:gap-8 px-3 sm:px-0">
             <Button 
-              className="bg-white text-legal-primary hover:bg-white/90 shadow-md"
-              size="lg"
+              className="bg-white text-legal-primary hover:bg-white hover:text-legal-secondary shadow-lg hover:shadow-xl w-full sm:w-auto px-7 py-7 md:px-10 md:py-8 lg:px-12 rounded-lg text-base sm:text-lg md:text-xl font-medium flex items-center justify-center gap-3 border border-transparent hover:border-legal-accent/20 transform hover:-translate-y-1 transition-all duration-300"
               onClick={() => navigate("/search")}
             >
-              Advanced Search
+              <Scale className="h-5 w-5 md:h-6 md:w-6 text-legal-accent" />
+              <span>Advanced Search</span>
             </Button>
             <Button 
-              className="bg-legal-accent text-white hover:bg-legal-accent/90 shadow-md"
-              size="lg"
+              className="bg-gradient-to-r from-legal-accent to-legal-accent/90 text-white hover:from-legal-accent/90 hover:to-legal-accent shadow-lg hover:shadow-xl w-full sm:w-auto px-7 py-7 md:px-10 md:py-8 lg:px-12 rounded-lg text-base sm:text-lg md:text-xl font-medium flex items-center justify-center gap-3 transform hover:-translate-y-1 transition-all duration-300"
               onClick={() => document.getElementById('upload-section')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Upload Document
+              <Upload className="h-5 w-5 md:h-6 md:w-6" />
+              <span>Upload Document</span>
             </Button>
+          </div>
+
+          <div className="mt-10 md:mt-14 flex justify-center items-center">
+            <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-5 py-3 gap-2">
+              <Sparkles className="h-4 w-4 md:h-5 md:w-5 text-legal-accent" />
+              <span className="text-white/90 text-sm md:text-base">Powered by AI and legal knowledge graphs</span>
+            </div>
           </div>
         </div>
       </section>

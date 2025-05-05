@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -8,15 +8,21 @@ import { Search, FileText, Upload } from "lucide-react";
 
 interface SearchInputProps {
   onSearch: (query: string, type: string) => void;
+  initialQuery?: string;
 }
 
-const SearchInput = ({ onSearch }: SearchInputProps) => {
-  const [queryText, setQueryText] = useState("");
+const SearchInput = ({ onSearch, initialQuery = "" }: SearchInputProps) => {
+  const [queryText, setQueryText] = useState(initialQuery);
   const [caseTitle, setCaseTitle] = useState("");
   const [caseNumber, setCaseNumber] = useState("");
   const [caseYear, setCaseYear] = useState("");
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [activeTab, setActiveTab] = useState("natural");
+
+  // Update queryText if initialQuery changes
+  useEffect(() => {
+    setQueryText(initialQuery);
+  }, [initialQuery]);
 
   const handleNaturalSearch = () => {
     onSearch(queryText, "natural");

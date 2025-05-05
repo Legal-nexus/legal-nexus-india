@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import SearchInput from "@/components/search/SearchInput";
 import SearchFilters from "@/components/search/SearchFilters";
@@ -6,14 +6,30 @@ import CaseCard from "@/components/case/CaseCard";
 import { Court, LegalCase, Subject, mockCases } from "@/lib/mockData";
 import { Separator } from "@/components/ui/separator";
 import { Lightbulb, Scale, BookOpen, Award } from "lucide-react";
+import { useLocation } from "react-router-dom";
+
+// Function to get query parameters
+const useQueryParams = () => {
+  return new URLSearchParams(useLocation().search);
+};
 
 const SearchPage = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const queryParams = useQueryParams();
+  const queryFromUrl = queryParams.get('q') || "";
+  
+  const [searchQuery, setSearchQuery] = useState(queryFromUrl);
   const [searchType, setSearchType] = useState("");
   const [filteredCases, setFilteredCases] = useState<LegalCase[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   
+  // Execute search when component mounts if query parameter exists
+  useEffect(() => {
+    if (queryFromUrl) {
+      handleSearch(queryFromUrl, "natural");
+    }
+  }, [queryFromUrl]);
+
   const handleSearch = (query: string, type: string) => {
     setSearchQuery(query);
     setSearchType(type);
@@ -113,7 +129,7 @@ const SearchPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Left Column - Search & Filters */}
           <div className="lg:col-span-1 space-y-6">
-            <SearchInput onSearch={handleSearch} />
+            <SearchInput onSearch={handleSearch} initialQuery={searchQuery} />
             
             <SearchFilters
               courts={[]}
