@@ -108,7 +108,7 @@ const Header = () => {
       {isOpen && (
         <div className="md:hidden bg-white border-t p-4 shadow-md">
           <div className="space-y-4">
-            <div className="flex items-center space-x-2 py-2 px-3 rounded-md hover:bg-gray-50" 
+            <div className="flex items-center space-x-2 py-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer transition-all duration-200 hover:shadow-md" 
               onClick={() => {
                 navigate("/notifications");
                 setIsOpen(false);
@@ -123,7 +123,7 @@ const Header = () => {
               )}
             </div>
             
-            <div className="flex items-center space-x-2 py-2 px-3 rounded-md hover:bg-gray-50"
+            <div className="flex items-center space-x-2 py-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer transition-all duration-200 hover:shadow-md"
               onClick={() => {
                 navigate("/profile");
                 setIsOpen(false);

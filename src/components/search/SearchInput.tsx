@@ -25,12 +25,29 @@ const SearchInput = ({ onSearch, initialQuery = "" }: SearchInputProps) => {
   }, [initialQuery]);
 
   const handleNaturalSearch = () => {
-    onSearch(queryText, "natural");
+    if (queryText.trim()) {
+      onSearch(queryText, "natural");
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (activeTab === "natural" && queryText.trim()) {
+        handleNaturalSearch();
+      } else if (activeTab === "citation") {
+        handleCitationSearch();
+      } else if (activeTab === "document" && uploadedFile) {
+        handleDocumentSearch();
+      }
+    }
   };
 
   const handleCitationSearch = () => {
     const citation = `${caseTitle} ${caseNumber} (${caseYear})`.trim();
-    onSearch(citation, "citation");
+    if (citation.trim()) {
+      onSearch(citation, "citation");
+    }
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,6 +84,7 @@ const SearchInput = ({ onSearch, initialQuery = "" }: SearchInputProps) => {
                 className="min-h-24 sm:min-h-32 resize-none mt-1 text-sm"
                 value={queryText}
                 onChange={(e) => setQueryText(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
             </div>
             <Button 
@@ -91,6 +109,7 @@ const SearchInput = ({ onSearch, initialQuery = "" }: SearchInputProps) => {
                   className="text-sm"
                   value={caseTitle}
                   onChange={(e) => setCaseTitle(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
               </div>
               <div className="col-span-3 sm:col-span-1 md:col-span-2">
@@ -101,6 +120,7 @@ const SearchInput = ({ onSearch, initialQuery = "" }: SearchInputProps) => {
                   className="text-sm"
                   value={caseNumber}
                   onChange={(e) => setCaseNumber(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
               </div>
               <div className="col-span-3 sm:col-span-2 md:col-span-2">
@@ -111,6 +131,7 @@ const SearchInput = ({ onSearch, initialQuery = "" }: SearchInputProps) => {
                   className="text-sm"
                   value={caseYear}
                   onChange={(e) => setCaseYear(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
               </div>
             </div>

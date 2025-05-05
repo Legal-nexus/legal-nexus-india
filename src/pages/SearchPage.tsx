@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import SearchInput from "@/components/search/SearchInput";
 import SearchFilters from "@/components/search/SearchFilters";
@@ -22,6 +22,9 @@ const SearchPage = () => {
   const [filteredCases, setFilteredCases] = useState<LegalCase[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  
+  // Add reference to the results section
+  const resultsRef = useRef<HTMLDivElement>(null);
   
   // Execute search when component mounts if query parameter exists
   useEffect(() => {
@@ -56,6 +59,13 @@ const SearchPage = () => {
       setFilteredCases(results);
       setIsSearching(false);
       setHasSearched(true);
+      
+      // Scroll to results after a short delay to ensure DOM has updated
+      setTimeout(() => {
+        if (resultsRef.current) {
+          resultsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
     }, 1500);
   };
 
@@ -150,7 +160,7 @@ const SearchPage = () => {
               </div>
             ) : hasSearched ? (
               <>
-                <div className="bg-white p-4 rounded-lg border shadow-sm mb-6">
+                <div ref={resultsRef} className="bg-white p-4 rounded-lg border shadow-sm mb-6">
                   <div className="flex justify-between items-center">
                     <h2 className="font-semibold">
                       {filteredCases.length} {filteredCases.length === 1 ? 'Result' : 'Results'}
