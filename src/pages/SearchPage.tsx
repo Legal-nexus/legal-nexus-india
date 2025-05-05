@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import SearchInput from "@/components/search/SearchInput";
@@ -6,6 +5,7 @@ import SearchFilters from "@/components/search/SearchFilters";
 import CaseCard from "@/components/case/CaseCard";
 import { Court, LegalCase, Subject, mockCases } from "@/lib/mockData";
 import { Separator } from "@/components/ui/separator";
+import { Lightbulb, Scale, BookOpen, Award } from "lucide-react";
 
 const SearchPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -181,28 +181,104 @@ const SearchPage = () => {
                 )}
               </>
             ) : (
-              <div className="bg-white p-8 rounded-lg border text-center">
-                <svg 
-                  className="h-16 w-16 mx-auto text-legal-primary opacity-80 mb-4" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" 
-                  />
-                </svg>
-                <h2 className="text-xl font-semibold text-legal-primary mb-2">
-                  Search for Legal Cases
-                </h2>
-                <p className="text-gray-600 max-w-md mx-auto">
-                  Use the search tools on the left to find relevant legal cases. 
-                  You can search using natural language, case citations, or upload a document.
-                </p>
-              </div>
+              <>
+                <div className="bg-white p-8 rounded-lg border text-center mb-10">
+                  <svg 
+                    className="h-16 w-16 mx-auto text-legal-primary opacity-80 mb-4" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={2} 
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" 
+                    />
+                  </svg>
+                  <h2 className="text-xl font-semibold text-legal-primary mb-2">
+                    Search for Legal Cases
+                  </h2>
+                  <p className="text-gray-600 max-w-md mx-auto">
+                    Use the search tools on the left to find relevant legal cases. 
+                    You can search using natural language, case citations, or upload a document.
+                  </p>
+                </div>
+                
+                {/* Additional content to fill space */}
+                <div className="mt-8 mb-12">
+                  <h3 className="text-xl font-semibold text-legal-primary mb-6 text-center">Advanced Search Features</h3>
+                  
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="bg-white p-6 rounded-lg border shadow-sm">
+                      <div className="flex items-start">
+                        <div className="h-10 w-10 rounded-full bg-legal-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
+                          <Lightbulb className="h-5 w-5 text-legal-primary" />
+                        </div>
+                        <div className="ml-4">
+                          <h4 className="text-lg font-medium mb-2 text-legal-primary">Natural Language Search</h4>
+                          <p className="text-gray-600">
+                            Enter your query in plain language. Our AI understands legal terminology and concepts to find the most relevant cases.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-white p-6 rounded-lg border shadow-sm">
+                      <div className="flex items-start">
+                        <div className="h-10 w-10 rounded-full bg-legal-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
+                          <Scale className="h-5 w-5 text-legal-primary" />
+                        </div>
+                        <div className="ml-4">
+                          <h4 className="text-lg font-medium mb-2 text-legal-primary">Legal Principle Matching</h4>
+                          <p className="text-gray-600">
+                            Our system identifies the legal principles in your query and matches them with cases that apply those principles.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-white p-6 rounded-lg border shadow-sm">
+                      <div className="flex items-start">
+                        <div className="h-10 w-10 rounded-full bg-legal-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
+                          <BookOpen className="h-5 w-5 text-legal-primary" />
+                        </div>
+                        <div className="ml-4">
+                          <h4 className="text-lg font-medium mb-2 text-legal-primary">Citation Analysis</h4>
+                          <p className="text-gray-600">
+                            Search by citation or see how cases cite each other to understand precedent development and authority.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-white p-6 rounded-lg border shadow-sm">
+                      <div className="flex items-start">
+                        <div className="h-10 w-10 rounded-full bg-legal-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
+                          <Award className="h-5 w-5 text-legal-primary" />
+                        </div>
+                        <div className="ml-4">
+                          <h4 className="text-lg font-medium mb-2 text-legal-primary">Precedent Ranking</h4>
+                          <p className="text-gray-600">
+                            Results are ranked by relevance, taking into account court hierarchy, recency, and citation frequency.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-legal-primary/5 p-6 rounded-lg">
+                  <h3 className="text-lg font-semibold text-legal-primary mb-4">Search Tips</h3>
+                  <ul className="list-disc list-inside space-y-2 text-gray-700">
+                    <li>Include specific legal terms and concepts relevant to your case</li>
+                    <li>Reference statutes, sections, or acts that apply to your matter</li>
+                    <li>Be specific about the jurisdiction you're interested in</li>
+                    <li>Use the filters to narrow down results by court, date, or subject matter</li>
+                    <li>Try different search terms if you don't find what you're looking for</li>
+                  </ul>
+                </div>
+              </>
             )}
           </div>
         </div>

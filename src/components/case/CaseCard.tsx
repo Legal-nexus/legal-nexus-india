@@ -1,4 +1,3 @@
-
 import { LegalCase } from "@/lib/mockData";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -24,6 +23,13 @@ const CaseCard = ({ caseData, highlightText }: CaseCardProps) => {
     return parts.map((part, i) => 
       regex.test(part) ? <span key={i} className="highlighted-text">{part}</span> : part
     );
+  };
+
+  const handleViewCase = () => {
+    // Navigate to case page
+    navigate(`/case/${caseData.id}`);
+    // Ensure we're at the top of the page
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -65,7 +71,7 @@ const CaseCard = ({ caseData, highlightText }: CaseCardProps) => {
         <Button 
           variant="link" 
           className="p-0 h-auto text-legal-primary"
-          onClick={() => navigate(`/case/${caseData.id}`)}
+          onClick={handleViewCase}
         >
           View Case Details
         </Button>

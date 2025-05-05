@@ -1,4 +1,3 @@
-
 import { RecommendedCase, SimilarityReason } from "@/lib/mockData";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -48,6 +47,13 @@ const RecommendedCaseCard = ({ recommendation }: RecommendedCaseCardProps) => {
   const navigate = useNavigate();
   const { case: caseData, similarityScore, reasons } = recommendation;
 
+  const handleViewCase = () => {
+    // Navigate to case page
+    navigate(`/case/${caseData.id}`);
+    // Ensure we're at the top of the page
+    window.scrollTo(0, 0);
+  };
+
   return (
     <Card className="hover:shadow-md transition-shadow">
       <CardHeader className="pb-2">
@@ -91,7 +97,7 @@ const RecommendedCaseCard = ({ recommendation }: RecommendedCaseCardProps) => {
         <Button 
           variant="link" 
           className="p-0 h-auto text-legal-primary"
-          onClick={() => navigate(`/case/${caseData.id}`)}
+          onClick={handleViewCase}
         >
           View Case Details
         </Button>

@@ -1,5 +1,4 @@
-
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import KnowledgeGraph from "@/components/visualization/KnowledgeGraph";
@@ -17,6 +16,12 @@ const CasePage = () => {
   const [caseData, setCaseData] = useState<LegalCase | null>(null);
   const [recommendations, setRecommendations] = useState<RecommendedCase[]>([]);
   const [loading, setLoading] = useState(true);
+  const pageTopRef = useRef<HTMLDivElement>(null);
+
+  // Scroll to top when component mounts or id changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
 
   useEffect(() => {
     // In a real app, this would be an API call
@@ -66,15 +71,18 @@ const CasePage = () => {
 
   return (
     <MainLayout>
-      <div className="container mx-auto px-4 py-8">
-        <Button
-          variant="ghost"
-          className="mb-4"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back
-        </Button>
+      <div ref={pageTopRef} className="container mx-auto px-4 py-8">
+        <div className="mb-6">
+          <Button
+            onClick={() => navigate(-1)}
+            variant="outline"
+            className="group relative overflow-hidden rounded-md bg-white border-legal-primary text-legal-primary hover:text-white shadow-sm transition-all duration-300 hover:shadow-md"
+          >
+            <span className="absolute inset-0 bg-legal-primary/0 group-hover:bg-legal-primary transition-colors duration-300 ease-in-out"></span>
+            <ArrowLeft className="h-4 w-4 mr-2 transition-transform duration-300 group-hover:-translate-x-1 relative z-10" />
+            <span className="relative z-10">Back to Search</span>
+          </Button>
+        </div>
 
         {/* Case Header */}
         <div className="mb-8">
